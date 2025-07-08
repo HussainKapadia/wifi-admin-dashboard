@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import User from '@/../database/models/user'
-import { comparePassword } from '../../utils/auth'
-import { signJwt } from '../../utils/jwt'
+import { comparePassword } from '../../../utils/auth'
+import { signJwt } from '../../../utils/jwt'
 import { serialize } from 'cookie'
 
 export async function POST(req: NextRequest) {

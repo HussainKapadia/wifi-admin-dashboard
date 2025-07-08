@@ -25,7 +25,7 @@ export default function SignupPage() {
     setLoading(true)
     setMessage(null)
     try {
-      const res = await fetch('/api/users/signup', {
+      const res = await fetch('/api/users/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -33,7 +33,7 @@ export default function SignupPage() {
       const result = await res.json()
       if (res.ok) {
         setMessage('Signup successful! Redirecting to login...')
-        setTimeout(() => router.push('/login'), 1500)
+        setTimeout(() => router.push('/auth/login'), 1500)
       } else {
         setMessage(result.error || 'Signup failed.')
       }
@@ -103,7 +103,7 @@ export default function SignupPage() {
       <div style={{ marginTop: 24, textAlign: 'center' }}>
         <span>Already have an account? </span>
         <Link
-          href='/login'
+          href='/auth/login'
           style={{ color: '#2563eb', textDecoration: 'underline' }}
         >
           Login

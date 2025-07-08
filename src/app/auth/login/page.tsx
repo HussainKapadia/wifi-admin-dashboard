@@ -2,6 +2,7 @@
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 interface LoginForm {
   email: string
@@ -16,21 +17,22 @@ export default function LoginPage() {
   } = useForm<LoginForm>()
   const [message, setMessage] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
   const onSubmit = async (data: LoginForm) => {
     setLoading(true)
     setMessage(null)
     try {
-      const res = await fetch('/api/users/login', {
+      const res = await fetch('/api/users/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        credentials: 'include'
       })
       const result = await res.json()
       if (res.ok) {
         setMessage('Login successful!')
-        // Optionally, reload or redirect here
-        // window.location.href = "/dashboard"
+        router.push('/dashboard')
       } else {
         setMessage(result.error || 'Login failed.')
       }
@@ -66,7 +68,7 @@ export default function LoginPage() {
       <div style={{ marginTop: 24, textAlign: 'center' }}>
         <span>Don't have an account? </span>
         <Link
-          href='/signup'
+          href='/auth/signup'
           style={{ color: '#2563eb', textDecoration: 'underline' }}
         >
           Sign up
