@@ -18,12 +18,16 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
-      createdAt: {
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')

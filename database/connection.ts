@@ -1,14 +1,21 @@
 import { Sequelize } from 'sequelize'
 import config from './config/config'
+import Module from 'module'
+import mysql2 from 'mysql2'
 
-let sequelize: Sequelize
+const env = process.env.NODE_ENV || 'development'
+const dbConfig = config[env]
 
-if (process.env.NODE_ENV === 'production') {
-  sequelize = new Sequelize(config.production)
-} else if (process.env.NODE_ENV === 'test') {
-  sequelize = new Sequelize(config.test)
-} else {
-  sequelize = new Sequelize(config.development)
-}
+const sequelize = new Sequelize(
+  dbConfig.database as string,
+  dbConfig.username as string,
+  dbConfig.password as string,
+  {
+    host: dbConfig.host,
+    dialect: dbConfig.dialect,
+    dialectModule: mysql2,
+    port: dbConfig.port
+  }
+)
 
 export default sequelize
