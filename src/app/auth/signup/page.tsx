@@ -1,8 +1,10 @@
 'use client'
+import AuthCard from '@/components/auth/AuthCard'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import InputField from '@/components/auth/InputField'
 
 interface SignupForm {
   first_name: string
@@ -45,70 +47,108 @@ export default function SignupPage() {
   }
 
   return (
-    <div style={{ maxWidth: 400, margin: '2rem auto' }}>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className='signup-form'>
-        <div className='form-control'>
-          <label>First Name</label>
-          <input
-            type='text'
-            id='first_name'
-            {...register('first_name', { required: true })}
-          />
-          {errors.first_name && <span>First name is required</span>}
+    <AuthCard>
+      {/* Logo or System Name */}
+      <div style={{ marginBottom: 24, textAlign: 'center' }}>
+        <div
+          style={{
+            fontWeight: 700,
+            fontSize: 28,
+            letterSpacing: 1,
+            color: '#2563eb',
+            marginBottom: 4
+          }}
+        >
+          WiFi Admin
         </div>
-
-        <div className='form-control'>
-          <label>Last Name</label>
-          <input
-            id='last_name'
-            {...register('last_name', { required: true })}
-          />
-          {errors.last_name && <span>Last name is required</span>}
+        <div style={{ fontSize: 15, color: '#64748b' }}>
+          Create your account
         </div>
-
-        <div className='form-control'>
-          <label>Email</label>
-          <input
-            type='email'
-            id='email'
-            {...register('email', {
-              required: { value: true, message: 'Email is required' },
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: 'Invalid email format'
-              }
-            })}
-          />
-          {errors.email?.message && (
-            <p className='error-message'>{errors.email.message}</p>
-          )}
-        </div>
-
-        <div className='form-control'>
-          <label>Password</label>
-          <input
-            type='password'
-            id='password'
-            {...register('password', { required: true, minLength: 6 })}
-          />
-          {errors.password && <span>Password is required (min 6 chars)</span>}
-        </div>
-
-        <button type='submit' disabled={loading} style={{ marginTop: 12 }}>
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
+        <InputField
+          label='First Name'
+          id='first_name'
+          register={register('first_name', { required: true })}
+          error={errors.first_name && 'First name is required'}
+          autoComplete='given-name'
+        />
+        <InputField
+          label='Last Name'
+          id='last_name'
+          register={register('last_name', { required: true })}
+          error={errors.last_name && 'Last name is required'}
+          autoComplete='family-name'
+        />
+        <InputField
+          label='Email'
+          id='email'
+          type='email'
+          register={register('email', {
+            required: { value: true, message: 'Email is required' },
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: 'Invalid email format'
+            }
+          })}
+          error={errors.email?.message}
+          autoComplete='email'
+        />
+        <InputField
+          label='Password'
+          id='password'
+          type='password'
+          register={register('password', { required: true, minLength: 6 })}
+          error={errors.password && 'Password is required (min 6 chars)'}
+          autoComplete='new-password'
+        />
+        <button
+          type='submit'
+          disabled={loading}
+          style={{
+            width: '100%',
+            padding: '12px 0',
+            background: '#2563eb',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 8,
+            fontWeight: 600,
+            fontSize: 16,
+            cursor: loading ? 'not-allowed' : 'pointer',
+            marginTop: 8,
+            boxShadow: '0 2px 8px rgba(37,99,235,0.08)'
+          }}
+        >
           {loading ? 'Signing up...' : 'Submit'}
         </button>
       </form>
-      {message && <div style={{ marginTop: 16 }}>{message}</div>}
-      <div style={{ marginTop: 24, textAlign: 'center' }}>
-        <span>Already have an account? </span>
+      {message && (
+        <div
+          style={{
+            marginTop: 18,
+            color: message.includes('success') ? '#22c55e' : '#ef4444',
+            fontWeight: 500,
+            fontSize: 15,
+            textAlign: 'center',
+            width: '100%'
+          }}
+        >
+          {message}
+        </div>
+      )}
+      <div style={{ marginTop: 28, textAlign: 'center', width: '100%' }}>
+        <span style={{ color: '#64748b' }}>Already have an account? </span>
         <Link
           href='/auth/login'
-          style={{ color: '#2563eb', textDecoration: 'underline' }}
+          style={{
+            color: '#2563eb',
+            textDecoration: 'underline',
+            fontWeight: 500
+          }}
         >
           Login
         </Link>
       </div>
-    </div>
+    </AuthCard>
   )
 }

@@ -18,11 +18,13 @@ const Header: React.FC = () => {
         justifyContent: 'flex-end',
         gap: 16,
         padding: 16,
-        borderBottom: '1px solid #eee',
-        background: '#fff',
+        borderBottom: '1px solid #cbd5e1',
+        background: '#d1d5db', // even darker light grey
         position: 'sticky',
         top: 0,
-        zIndex: 100
+        zIndex: 100,
+        color: '#23272f', // dark text
+        boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
       }}
     >
       <div style={{ position: 'relative' }}>
@@ -32,7 +34,8 @@ const Header: React.FC = () => {
             background: 'none',
             border: 'none',
             cursor: 'pointer',
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            color: '#23272f'
           }}
           aria-label='Profile'
         >
@@ -44,10 +47,11 @@ const Header: React.FC = () => {
               position: 'absolute',
               right: 0,
               top: '100%',
-              background: '#fff',
-              border: '1px solid #eee',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-              zIndex: 10
+              background: '#d1d5db',
+              border: '1px solid #cbd5e1',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+              zIndex: 10,
+              color: '#23272f'
             }}
           >
             <button
@@ -58,7 +62,8 @@ const Header: React.FC = () => {
                 background: 'none',
                 border: 'none',
                 textAlign: 'left',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                color: '#23272f'
               }}
             >
               Logout
