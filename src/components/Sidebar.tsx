@@ -6,12 +6,10 @@ const sidebarStyle: React.CSSProperties = {
   flexDirection: 'column',
   justifyContent: 'space-between',
   padding: 24,
-  // borderRight: '1px solid #cbd5e1', // removed for seamless look
+
   minHeight: '100vh',
   minWidth: 180,
-  background: '#d1d5db', // match header
-  // borderRadius: 16, // removed for sharp edges
-  // boxShadow: '0 4px 24px rgba(0,0,0,0.12)', // removed for seamless look
+  background: '#d1d5db',
   position: 'sticky',
   top: 0,
   transition: 'min-width 0.2s',
@@ -45,7 +43,7 @@ const linkStyle: React.CSSProperties = {
 
 const linkHoverStyle: React.CSSProperties = {
   background: '#cbd5e1',
-  color: '#2563eb' // blue on hover
+  color: '#2563eb'
 }
 
 const Sidebar: React.FC = () => {

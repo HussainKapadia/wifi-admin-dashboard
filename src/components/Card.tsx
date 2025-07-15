@@ -14,9 +14,9 @@ const Card: React.FC<CardProps> = ({
   className = ''
 }) => {
   const baseCardStyle = {
-    background: '#d1d5db', // even darker light grey
+    background: '#d1d5db',
     boxShadow: '0 4px 24px rgba(0,0,0,0.12)',
-    color: '#23272f', // dark text
+    color: '#23272f',
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'flex-start'

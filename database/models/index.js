@@ -44,12 +44,10 @@ Object.keys(db).forEach(modelName => {
   }
 })
 
-// Attach ConnectedDevice model (from TypeScript) to db
 try {
   const ConnectedDevice = require('./connectedDevice').default
   db.ConnectedDevice = ConnectedDevice
 } catch (e) {
-  // If the model doesn't exist or fails to load, log a warning
   console.warn('Could not load ConnectedDevice model:', e)
 }
 

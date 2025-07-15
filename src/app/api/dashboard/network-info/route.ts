@@ -3,7 +3,7 @@ import NetworkInfo from '@/../database/models/networkInfo'
 import { verifyJwt } from '@/app/utils/jwt'
 import User from '@/../database/models/user'
 
-// Helper to get user id from JWT
+// user id JWT se laane ke liye helper function
 async function getUserIdFromRequest(req: NextRequest) {
   const token = req.cookies.get('token')?.value
   if (!token) return null
@@ -13,7 +13,6 @@ async function getUserIdFromRequest(req: NextRequest) {
   return (payload as any).id || null
 }
 
-// GET: Retrieve network info for the logged-in user
 export async function GET(req: NextRequest) {
   try {
     const userId = await getUserIdFromRequest(req)
@@ -39,7 +38,6 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST: Create or update network info for the logged-in user
 export async function POST(req: NextRequest) {
   const userId = await getUserIdFromRequest(req)
   if (!userId) {

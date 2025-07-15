@@ -17,7 +17,6 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare password: string
 }
 
-// Initializing the model
 User.init(
   {
     id: {

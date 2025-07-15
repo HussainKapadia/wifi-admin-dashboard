@@ -20,11 +20,11 @@ const Header: React.FC = () => {
         gap: 16,
         padding: 16,
         borderBottom: '1px solid #cbd5e1',
-        background: '#d1d5db', // even darker light grey
+        background: '#d1d5db',
         position: 'sticky',
         top: 0,
         zIndex: 100,
-        color: '#23272f', // dark text
+        color: '#23272f',
         boxShadow: '0 2px 8px rgba(0,0,0,0.12)'
       }}
     >

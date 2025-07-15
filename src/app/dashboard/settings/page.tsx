@@ -10,7 +10,6 @@ export default function DashboardSettings() {
     useSettings()
 
   const handleLogout = () => {
-    // This will work the same as the header logout
     fetch('/api/users/auth/logout', {
       method: 'POST',
       credentials: 'include'

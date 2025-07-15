@@ -5,7 +5,7 @@ export async function POST() {
   const cookie = serialize('token', '', {
     httpOnly: true,
     path: '/',
-    maxAge: 0 // This effectively deletes the cookie
+    maxAge: 0 // cookie delete ke liye
   })
 
   return new NextResponse(null, {
