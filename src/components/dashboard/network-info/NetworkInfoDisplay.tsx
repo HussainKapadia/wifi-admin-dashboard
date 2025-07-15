@@ -39,20 +39,15 @@ const NetworkInfoDisplay: React.FC<NetworkInfoDisplayProps> = ({
   onEdit
 }) => {
   return (
-    <Card title={undefined}>
+    <Card title='Network Information'>
       <div
         style={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-end',
           alignItems: 'center',
           marginBottom: 24
         }}
       >
-        <h2
-          style={{ margin: 0, fontSize: 22, color: '#23272f', fontWeight: 700 }}
-        >
-          Network Information
-        </h2>
         <button
           onClick={onEdit}
           style={{

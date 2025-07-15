@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ConnectedDeviceForm from './ConnectedDeviceForm'
+import Card from '@/components/Card'
 
 export interface ConnectedDevice {
   id: number
@@ -91,27 +92,15 @@ const ConnectedDevicesList: React.FC = () => {
   }
 
   return (
-    <div
-      style={{
-        width: '100%',
-        background: '#d1d5db',
-        borderRadius: 16,
-        boxShadow: '0 4px 24px rgba(0,0,0,0.12)',
-        padding: '2rem 1.5rem',
-        margin: '1.5rem 0'
-      }}
-    >
+    <Card title='Connected Devices'>
       <div
         style={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-end',
           alignItems: 'center',
           marginBottom: 24
         }}
       >
-        <h2 style={{ margin: 0, fontSize: 22, fontWeight: 600 }}>
-          Connected Devices
-        </h2>
         <button
           onClick={handleAdd}
           style={{
@@ -219,7 +208,7 @@ const ConnectedDevicesList: React.FC = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    </Card>
   )
 }
 

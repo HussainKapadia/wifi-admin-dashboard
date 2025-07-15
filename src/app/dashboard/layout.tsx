@@ -13,6 +13,7 @@ export default function DashboardLayout({
       <Sidebar />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <Header />
+
         <main style={{ padding: 24 }}>{children}</main>
       </div>
     </div>
