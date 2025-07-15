@@ -1,3 +1,7 @@
+npm run migrate
+
+npm run dev
+
 ```
 wifi-admin-dashboard
 ├─ .prettierrc
