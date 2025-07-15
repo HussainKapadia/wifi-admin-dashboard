@@ -15,9 +15,6 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare last_name: string
   declare email: string
   declare password: string
-
-  declare created_at: CreationOptional<Date>
-  declare updated_at: CreationOptional<Date>
 }
 
 // Initializing the model
@@ -57,24 +54,13 @@ User.init(
       validate: {
         len: [6, 255]
       }
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW
     }
   },
   {
     sequelize: connection,
     modelName: 'User',
     tableName: 'users',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    timestamps: true
   }
 )
 

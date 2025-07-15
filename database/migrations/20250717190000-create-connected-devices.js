@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('network_infos', {
+    await queryInterface.createTable('connected_devices', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -17,19 +17,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      ssid: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      security_type: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      channel: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      frequency: {
+      device_name: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -37,16 +25,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      subnet_mask: {
+      mac_address: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      gateway: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      dns: {
-        type: Sequelize.STRING,
+      connection_type: {
+        type: Sequelize.ENUM('Wireless', 'Wired'),
         allowNull: false
       },
       createdAt: {
@@ -64,6 +48,6 @@ module.exports = {
     })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('network_infos')
+    await queryInterface.dropTable('connected_devices')
   }
 }

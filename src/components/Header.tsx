@@ -6,8 +6,9 @@ const Header: React.FC = () => {
   const router = useRouter()
 
   const handleLogout = async () => {
-    await fetch('/api/users/logout', { method: 'POST' })
+    await fetch('/api/users/auth/logout', { method: 'POST' })
     router.push('/auth/login')
+    console.log('logout success', router)
   }
 
   return (

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import AuthCard from '@/components/auth/AuthCard'
+import Card from '@/components/Card'
 
 interface LoginForm {
   email: string
@@ -45,7 +45,7 @@ export default function LoginPage() {
   }
 
   return (
-    <AuthCard>
+    <Card variant='auth'>
       {/* Logo or System Name */}
       <div style={{ marginBottom: 24, textAlign: 'center' }}>
         <div
@@ -159,6 +159,6 @@ export default function LoginPage() {
           Sign up
         </Link>
       </div>
-    </AuthCard>
+    </Card>
   )
 }

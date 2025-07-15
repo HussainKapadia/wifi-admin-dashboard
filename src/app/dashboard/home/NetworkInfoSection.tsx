@@ -2,9 +2,11 @@
 
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import DashboardCard from '@/components/dashboard/DashboardCard'
+import Card from '@/components/Card'
 import Link from 'next/link'
 import InputField from '@/components/auth/InputField'
+import NetworkInfoDisplay from '@/components/dashboard/network-info/NetworkInfoDisplay'
+import NetworkInfoForm from '@/components/dashboard/network-info/NetworkInfoForm'
 
 interface NetworkInfoFormValues {
   ssid: string
@@ -30,7 +32,7 @@ const defaultValues: NetworkInfoFormValues = {
 
 function LoginPrompt() {
   return (
-    <DashboardCard title='Network Information'>
+    <Card title='Network Information'>
       <div style={{ textAlign: 'center', padding: 24 }}>
         <p style={{ marginBottom: 16 }}>
           Please log in to see your network information.
@@ -46,7 +48,7 @@ function LoginPrompt() {
           Go to Login
         </Link>
       </div>
-    </DashboardCard>
+    </Card>
   )
 }
 
@@ -79,12 +81,14 @@ const NetworkInfoSection: React.FC = () => {
       setError(null)
       setNotLoggedIn(false)
       try {
-        const res = await fetch('/api/network-info')
+        const res = await fetch('/api/dashboard/network-info')
+        console.log(res.status)
         if (res.status === 401) {
           setNotLoggedIn(true)
           setNetworkInfo(null)
         } else if (res.ok) {
           const data = await res.json()
+          console.log(data.networkInfo)
           if (!data.networkInfo) {
             setIsFirstTime(true)
             setNetworkInfo(defaultValues)
@@ -104,14 +108,13 @@ const NetworkInfoSection: React.FC = () => {
       }
     }
     fetchNetworkInfo()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const onSubmit = async (values: NetworkInfoFormValues) => {
     setSaving(true)
     setError(null)
     try {
-      const res = await fetch('/api/network-info', {
+      const res = await fetch('/api/dashboard/network-info', {
         method: isFirstTime ? 'POST' : 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values)
@@ -136,175 +139,37 @@ const NetworkInfoSection: React.FC = () => {
   }
 
   if (loading) {
-    return <DashboardCard title='Network Information'>Loading...</DashboardCard>
+    return <Card title='Network Information'>Loading...</Card>
   }
   if (notLoggedIn) {
     return <LoginPrompt />
   }
 
-  // Display mode (not editing)
   if (!editing) {
     return (
-      <DashboardCard title='Network Information'>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            marginBottom: 8
-          }}
-        >
-          <button
-            onClick={() => setEditing(true)}
-            style={{
-              background: 'none',
-              border: 'none',
-              color: '#2563eb',
-              fontWeight: 600,
-              cursor: 'pointer',
-              fontSize: 15,
-              float: 'right'
-            }}
-          >
-            Edit
-          </button>
-        </div>
-        {error && !isFirstTime && (
-          <div style={{ color: 'red', marginBottom: 8 }}>{error}</div>
-        )}
-        <div
-          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}
-        >
-          <div>
-            <span style={labelStyle}>SSID:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.ssid || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>Security Type:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.security_type || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>Channel:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.channel || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>Frequency:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.frequency || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>IP Address:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.ip_address || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>Subnet Mask:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.subnet_mask || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>Gateway:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.gateway || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>DNS:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.dns || ''}</span>
-          </div>
-        </div>
-      </DashboardCard>
+      <NetworkInfoDisplay
+        networkInfo={networkInfo}
+        error={error}
+        isFirstTime={isFirstTime}
+        onEdit={() => setEditing(true)}
+      />
     )
   }
 
-  // Edit mode (inline form)
   return (
-    <DashboardCard title='Network Information'>
-      {error && <div style={{ color: 'red', marginBottom: 8 }}>{error}</div>}
-      <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
-        <div
-          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}
-        >
-          <InputField
-            label='SSID'
-            id='ssid'
-            register={register('ssid', { required: true })}
-            error={errors.ssid && 'Required'}
-            autoComplete='off'
-            inputSize='small'
-          />
-          <InputField
-            label='Security Type'
-            id='security_type'
-            register={register('security_type', { required: true })}
-            error={errors.security_type && 'Required'}
-            autoComplete='off'
-            inputSize='small'
-          />
-          <InputField
-            label='Channel'
-            id='channel'
-            type='number'
-            register={register('channel', {
-              required: true,
-              valueAsNumber: true
-            })}
-            error={errors.channel && 'Required'}
-            autoComplete='off'
-            inputSize='small'
-          />
-          <InputField
-            label='Frequency'
-            id='frequency'
-            register={register('frequency', { required: true })}
-            error={errors.frequency && 'Required'}
-            autoComplete='off'
-            inputSize='small'
-          />
-          <InputField
-            label='IP Address'
-            id='ip_address'
-            register={register('ip_address', { required: true })}
-            error={errors.ip_address && 'Required'}
-            autoComplete='off'
-            inputSize='small'
-          />
-          <InputField
-            label='Subnet Mask'
-            id='subnet_mask'
-            register={register('subnet_mask', { required: true })}
-            error={errors.subnet_mask && 'Required'}
-            autoComplete='off'
-            inputSize='small'
-          />
-          <InputField
-            label='Gateway'
-            id='gateway'
-            register={register('gateway', { required: true })}
-            error={errors.gateway && 'Required'}
-            autoComplete='off'
-            inputSize='small'
-          />
-          <InputField
-            label='DNS (comma separated)'
-            id='dns'
-            register={register('dns', { required: true })}
-            error={errors.dns && 'Required'}
-            autoComplete='off'
-            inputSize='small'
-          />
-        </div>
-        <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
-          <button type='submit' disabled={saving} style={{ width: 120 }}>
-            {saving ? 'Saving...' : 'Save'}
-          </button>
-          <button
-            type='button'
-            onClick={() => {
-              setEditing(false)
-              reset(networkInfo || defaultValues)
-            }}
-            style={{ width: 120 }}
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
-    </DashboardCard>
+    <NetworkInfoForm
+      networkInfo={networkInfo}
+      error={error}
+      isFirstTime={isFirstTime}
+      saving={saving}
+      onSubmit={handleSubmit(onSubmit)}
+      onCancel={() => {
+        setEditing(false)
+        reset(networkInfo || defaultValues)
+      }}
+      register={register}
+      errors={errors}
+    />
   )
 }
 

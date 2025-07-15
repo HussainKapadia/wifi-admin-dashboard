@@ -1,5 +1,5 @@
 'use client'
-import AuthCard from '@/components/auth/AuthCard'
+import Card from '@/components/Card'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -47,7 +47,7 @@ export default function SignupPage() {
   }
 
   return (
-    <AuthCard>
+    <Card variant='auth'>
       {/* Logo or System Name */}
       <div style={{ marginBottom: 24, textAlign: 'center' }}>
         <div
@@ -149,6 +149,6 @@ export default function SignupPage() {
           Login
         </Link>
       </div>
-    </AuthCard>
+    </Card>
   )
 }

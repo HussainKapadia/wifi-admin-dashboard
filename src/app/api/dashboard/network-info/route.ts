@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import NetworkInfo from '@/../database/models/networkInfo'
-import { verifyJwt } from '@/app/api/utils/jwt'
+import { verifyJwt } from '@/app/utils/jwt'
 import User from '@/../database/models/user'
 
 // Helper to get user id from JWT
@@ -15,18 +15,28 @@ async function getUserIdFromRequest(req: NextRequest) {
 
 // GET: Retrieve network info for the logged-in user
 export async function GET(req: NextRequest) {
-  const userId = await getUserIdFromRequest(req)
-  if (!userId) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
-  const info = await NetworkInfo.findOne({ where: { user_id: userId } })
-  if (!info) {
+  try {
+    const userId = await getUserIdFromRequest(req)
+    if (!userId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    const info = await NetworkInfo.findOne({ where: { user_id: userId } })
+    if (!info) {
+      return NextResponse.json({ networkInfo: null })
+    }
+
+    return NextResponse.json({ networkInfo: info })
+  } catch (error: any) {
+    console.error('Error fetching network info:', error)
     return NextResponse.json(
-      { error: 'No network info found' },
-      { status: 404 }
+      {
+        error: 'Failed to fetch network info',
+        details: error.message || String(error)
+      },
+      { status: 500 }
     )
   }
-  return NextResponse.json({ networkInfo: info })
 }
 
 // POST: Create or update network info for the logged-in user

@@ -11,9 +11,7 @@ module.exports = {
         ip_address: '192.168.1.1',
         subnet_mask: '255.255.255.0',
         gateway: '192.168.1.1',
-        dns: '8.8.8.8,8.8.4.4',
-        created_at: new Date(),
-        updated_at: new Date()
+        dns: '8.8.8.8,8.8.4.4'
       }
     ])
   },

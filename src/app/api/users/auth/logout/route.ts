@@ -5,10 +5,13 @@ export async function POST() {
   const cookie = serialize('token', '', {
     httpOnly: true,
     path: '/',
-    expires: new Date(0)
+    maxAge: 0 // This effectively deletes the cookie
   })
+
   return new NextResponse(null, {
     status: 200,
-    headers: { 'Set-Cookie': cookie }
+    headers: {
+      'Set-Cookie': cookie
+    }
   })
 }

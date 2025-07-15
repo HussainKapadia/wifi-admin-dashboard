@@ -58,24 +58,13 @@ NetworkInfo.init(
       set(val: string[] | string) {
         this.setDataValue('dns', Array.isArray(val) ? val.join(',') : val)
       }
-    },
-    created_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW
-    },
-    updated_at: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW
     }
   },
   {
     sequelize: connection,
     modelName: 'NetworkInfo',
     tableName: 'network_infos',
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    timestamps: true
   }
 )
 

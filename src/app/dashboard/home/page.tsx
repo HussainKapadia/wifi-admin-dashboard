@@ -1,6 +1,7 @@
 'use client'
 
 import NetworkInfoSection from './NetworkInfoSection'
+import ConnectedDevicesList from '@/components/dashboard/connected-devices/ConnectedDevicesList'
 
 export default function DashboardHome() {
   return (
@@ -15,7 +16,7 @@ export default function DashboardHome() {
       }}
     >
       <NetworkInfoSection />
-      {/* Add more dashboard sections/components here in the future */}
+      <ConnectedDevicesList />
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import DashboardCard from '@/components/dashboard/DashboardCard'
+import Card from '@/components/Card'
 
 export default function DashboardSettings() {
   return (
@@ -10,9 +10,9 @@ export default function DashboardSettings() {
         minHeight: '60vh'
       }}
     >
-      <DashboardCard title='Settings'>
+      <Card title='Settings'>
         <div>Dashboard Settings Page</div>
-      </DashboardCard>
+      </Card>
     </div>
   )
 }

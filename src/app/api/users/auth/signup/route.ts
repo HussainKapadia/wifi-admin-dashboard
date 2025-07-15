@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import User from '@/../database/models/user'
-import { hashPassword } from '../../../utils/auth'
+import { hashPassword } from '../../../../utils/auth'
 
 export async function POST(req: NextRequest) {
   try {
