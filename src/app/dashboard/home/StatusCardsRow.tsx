@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import WifiStatusCard from '@/components/dashboard/status/WifiStatusCard'
 import FirewallStatusCard from '@/components/dashboard/status/FirewallStatusCard'
 import SSIDCard from '@/components/dashboard/status/SSIDCard'
 import ConnectedDevicesCountCard from '@/components/dashboard/status/ConnectedDevicesCountCard'
+import { useSettings } from '@/contexts/SettingsContext'
 
 interface StatusCardsRowProps {
   ssid?: string
@@ -17,8 +18,8 @@ const StatusCardsRow: React.FC<StatusCardsRowProps> = ({
   notLoggedIn = false,
   deviceCount = 0
 }) => {
-  const [wifiEnabled, setWifiEnabled] = useState(true)
-  const [firewallEnabled, setFirewallEnabled] = useState(false)
+  const { wifiEnabled, firewallEnabled, setWifiEnabled, setFirewallEnabled } =
+    useSettings()
 
   return (
     <div
