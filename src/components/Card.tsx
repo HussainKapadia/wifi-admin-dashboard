@@ -35,7 +35,8 @@ const Card: React.FC<CardProps> = ({
     ...baseCardStyle,
     width: '100%',
     padding: '2rem 1.5rem',
-    margin: '1.5rem 0'
+    margin: '1.5rem 0',
+    borderRadius: 16
   }
 
   const containerStyle =

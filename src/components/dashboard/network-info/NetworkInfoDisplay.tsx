@@ -1,8 +1,29 @@
 import React from 'react'
 import Card from '@/components/Card'
 
-const labelStyle = { fontWeight: 500, color: '#374151', minWidth: 120 }
-const valueStyle = { color: '#23272f' }
+const tableStyle = {
+  width: '100%',
+  borderCollapse: 'collapse' as const,
+  minWidth: 400,
+  marginTop: 8
+}
+const thStyle = {
+  textAlign: 'left' as const,
+  padding: '12px 16px',
+  fontWeight: 600,
+  color: '#23272f',
+  background: '#f3f4f6',
+  border: '1px solid #e5e7eb',
+  width: '25%'
+}
+const tdStyle = {
+  padding: '12px 16px',
+  color: '#374151',
+  border: '1px solid #e5e7eb',
+  fontWeight: 500,
+  width: '25%',
+  background: '#fff'
+}
 
 interface NetworkInfoDisplayProps {
   networkInfo: any
@@ -18,24 +39,32 @@ const NetworkInfoDisplay: React.FC<NetworkInfoDisplayProps> = ({
   onEdit
 }) => {
   return (
-    <Card title='Network Information'>
+    <Card title={undefined}>
       <div
         style={{
           display: 'flex',
-          justifyContent: 'flex-end',
-          marginBottom: 8
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: 24
         }}
       >
+        <h2
+          style={{ margin: 0, fontSize: 22, color: '#23272f', fontWeight: 700 }}
+        >
+          Network Information
+        </h2>
         <button
           onClick={onEdit}
           style={{
-            background: 'none',
+            background: '#2563eb',
+            color: '#fff',
             border: 'none',
-            color: '#2563eb',
+            borderRadius: 6,
+            padding: '8px 18px',
             fontWeight: 600,
-            cursor: 'pointer',
             fontSize: 15,
-            float: 'right'
+            cursor: 'pointer',
+            boxShadow: '0 1px 2px rgba(0,0,0,0.04)'
           }}
         >
           Edit
@@ -49,41 +78,35 @@ const NetworkInfoDisplay: React.FC<NetworkInfoDisplayProps> = ({
           Please fill out your network information below.
         </div>
       ) : (
-        <div
-          style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}
-        >
-          <div>
-            <span style={labelStyle}>SSID:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.ssid || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>Security Type:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.security_type || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>Channel:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.channel || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>Frequency:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.frequency || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>IP Address:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.ip_address || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>Subnet Mask:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.subnet_mask || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>Gateway:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.gateway || ''}</span>
-          </div>
-          <div>
-            <span style={labelStyle}>DNS:</span>{' '}
-            <span style={valueStyle}>{networkInfo?.dns || ''}</span>
-          </div>
+        <div style={{ width: '100%', overflowX: 'auto' }}>
+          <table style={tableStyle}>
+            <tbody>
+              <tr>
+                <th style={thStyle}>SSID</th>
+                <td style={tdStyle}>{networkInfo?.ssid || ''}</td>
+                <th style={thStyle}>Security Type</th>
+                <td style={tdStyle}>{networkInfo?.security_type || ''}</td>
+              </tr>
+              <tr>
+                <th style={thStyle}>Channel</th>
+                <td style={tdStyle}>{networkInfo?.channel || ''}</td>
+                <th style={thStyle}>Frequency</th>
+                <td style={tdStyle}>{networkInfo?.frequency || ''}</td>
+              </tr>
+              <tr>
+                <th style={thStyle}>IP Address</th>
+                <td style={tdStyle}>{networkInfo?.ip_address || ''}</td>
+                <th style={thStyle}>Subnet Mask</th>
+                <td style={tdStyle}>{networkInfo?.subnet_mask || ''}</td>
+              </tr>
+              <tr>
+                <th style={thStyle}>Gateway</th>
+                <td style={tdStyle}>{networkInfo?.gateway || ''}</td>
+                <th style={thStyle}>DNS</th>
+                <td style={tdStyle}>{networkInfo?.dns || ''}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       )}
     </Card>

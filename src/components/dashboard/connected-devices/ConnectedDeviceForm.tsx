@@ -16,6 +16,29 @@ const defaultValues = {
   connection_type: 'Wireless' as 'Wireless' | 'Wired'
 }
 
+const tableStyle = {
+  width: '100%',
+  borderCollapse: 'collapse' as const,
+  minWidth: 400,
+  marginTop: 8
+}
+const thStyle = {
+  textAlign: 'left' as const,
+  padding: '12px 16px',
+  fontWeight: 600,
+  color: '#23272f',
+  background: '#f3f4f6',
+  border: '1px solid #e5e7eb',
+  width: '25%'
+}
+const tdStyle = {
+  padding: '12px 16px',
+  color: '#374151',
+  border: '1px solid #e5e7eb',
+  fontWeight: 500,
+  width: '25%'
+}
+
 const ConnectedDeviceForm: React.FC<Props> = ({
   device,
   onSuccess,
@@ -59,81 +82,124 @@ const ConnectedDeviceForm: React.FC<Props> = ({
   }
 
   return (
-    <div
+    <form
+      onSubmit={handleSubmit(onSubmit)}
       style={{
-        background: '#fff',
-        borderRadius: 8,
-        boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-        padding: 24,
-        maxWidth: 400,
-        margin: '24px auto'
+        width: '100%',
+        background: 'none',
+        boxShadow: 'none',
+        padding: 0,
+        margin: 0
       }}
     >
-      <h3>{device ? 'Edit Device' : 'Add Device'}</h3>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <InputField
-          label='Device Name'
-          id='device_name'
-          register={register('device_name', { required: true })}
-          error={errors.device_name && 'Required'}
-          autoComplete='off'
-          inputSize='small'
-        />
-        <InputField
-          label='IP Address'
-          id='ip_address'
-          register={register('ip_address', { required: true })}
-          error={errors.ip_address && 'Required'}
-          autoComplete='off'
-          inputSize='small'
-        />
-        <InputField
-          label='MAC Address'
-          id='mac_address'
-          register={register('mac_address', { required: true })}
-          error={errors.mac_address && 'Required'}
-          autoComplete='off'
-          inputSize='small'
-        />
-        <div style={{ marginBottom: 12 }}>
-          <label style={{ display: 'block', marginBottom: 6, fontWeight: 500 }}>
-            Connection Type
-          </label>
-          <select
-            {...register('connection_type', { required: true })}
-            style={{
-              width: '100%',
-              padding: '6px 8px',
-              border: '1px solid #d1d5db',
-              borderRadius: 8,
-              fontSize: 13,
-              outline: 'none',
-              marginBottom: 2
-            }}
-          >
-            <option value='Wireless'>Wireless</option>
-            <option value='Wired'>Wired</option>
-          </select>
-          {errors.connection_type && (
-            <span style={{ color: '#ef4444', fontSize: 13 }}>Required</span>
-          )}
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
-          <button
-            type='button'
-            onClick={onCancel}
-            disabled={isSubmitting}
-            style={{ width: 120 }}
-          >
-            Cancel
-          </button>
-          <button type='submit' disabled={isSubmitting} style={{ width: 120 }}>
-            {isSubmitting ? 'Saving...' : device ? 'Update' : 'Add'}
-          </button>
-        </div>
-      </form>
-    </div>
+      <table style={tableStyle}>
+        <tbody>
+          <tr>
+            <th style={thStyle}>Device Name</th>
+            <td style={tdStyle} colSpan={3}>
+              <InputField
+                label=''
+                id='device_name'
+                register={register('device_name', { required: true })}
+                error={errors.device_name && 'Required'}
+                autoComplete='off'
+                inputSize='small'
+              />
+            </td>
+          </tr>
+          <tr>
+            <th style={thStyle}>IP Address</th>
+            <td style={tdStyle}>
+              <InputField
+                label=''
+                id='ip_address'
+                register={register('ip_address', { required: true })}
+                error={errors.ip_address && 'Required'}
+                autoComplete='off'
+                inputSize='small'
+              />
+            </td>
+            <th style={thStyle}>MAC Address</th>
+            <td style={tdStyle}>
+              <InputField
+                label=''
+                id='mac_address'
+                register={register('mac_address', { required: true })}
+                error={errors.mac_address && 'Required'}
+                autoComplete='off'
+                inputSize='small'
+              />
+            </td>
+          </tr>
+          <tr>
+            <th style={thStyle}>Connection Type</th>
+            <td style={tdStyle} colSpan={3}>
+              <select
+                {...register('connection_type', { required: true })}
+                style={{
+                  width: '100%',
+                  padding: '6px 8px',
+                  border: '1px solid #d1d5db',
+                  borderRadius: 8,
+                  fontSize: 13,
+                  outline: 'none',
+                  marginBottom: 2
+                }}
+              >
+                <option value='Wireless'>Wireless</option>
+                <option value='Wired'>Wired</option>
+              </select>
+              {errors.connection_type && (
+                <span style={{ color: '#ef4444', fontSize: 13 }}>Required</span>
+              )}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      {error && <p style={{ color: 'red', marginTop: 8 }}>{error}</p>}
+      <div
+        style={{
+          display: 'flex',
+          gap: 12,
+          marginTop: 24,
+          justifyContent: 'flex-end'
+        }}
+      >
+        <button
+          type='button'
+          onClick={onCancel}
+          disabled={isSubmitting}
+          style={{
+            width: 120,
+            background: '#f3f4f6',
+            color: '#23272f',
+            border: '1px solid #d1d5db',
+            borderRadius: 6,
+            fontWeight: 600,
+            fontSize: 15,
+            cursor: 'pointer'
+          }}
+        >
+          Cancel
+        </button>
+        <button
+          type='submit'
+          disabled={isSubmitting}
+          style={{
+            width: 120,
+            background: '#2563eb',
+            color: '#fff',
+            border: 'none',
+            borderRadius: 6,
+            fontWeight: 600,
+            fontSize: 15,
+            cursor: 'pointer'
+          }}
+        >
+          {isSubmitting ? 'Saving...' : device ? 'Update' : 'Add'}
+        </button>
+      </div>
+    </form>
   )
 }
 
